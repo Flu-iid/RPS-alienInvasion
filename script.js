@@ -1,52 +1,67 @@
-console.log("lets start");
+// Core Game
 
-function play(championMove) {
+function alienPlay() {
   const computerMove = Math.floor(Math.random() * 3);
-  const moves = ["rock", "paper", "scissor"];
-  console.log(`Alien did : ${moves[computerMove]}`);
-  switch (championMove) {
-    case moves[0]:
-      switch (computerMove) {
-        case 0:
-          return 0;
-        case 1:
-          return -1;
-        case 2:
-          return +1;
-      }
+  console.log(`Alien did : ${moveName(computerMove)}`);
+  return computerMove;
+}
+
+function championPlay(championMove) {}
+
+function moveName(move) {
+  const moveNames = ["rock", "paper", "scissor"];
+  return moveNames[move];
+}
+
+function movePoint(move1, move2) {
+  const moves = [
+    [0, -1, +1],
+    [+1, 0, -1],
+    [-1, +1, 0],
+  ];
+  if (move1 > -1 && move1 < 3) {
+    console.log(move1, move2);
+    return moves[move1][move2];
+  } else {
+    console.log("bad input");
+  }
+}
+
+function result(point) {
+  switch (point) {
+    case -1:
+      console.log("lost");
       break;
-    case moves[1]:
-      switch (computerMove) {
-        case 0:
-          return +1;
-        case 1:
-          return 0;
-        case 2:
-          return -1;
-      }
+    case 0:
+      console.log("draw");
       break;
-    case moves[2]:
-      switch (computerMove) {
-        case 0:
-          return -1;
-        case 1:
-          return +1;
-        case 2:
-          return 0;
-      }
+    case +1:
+      console.log("win");
       break;
+
     default:
       break;
   }
 }
+result(movePoint(1, alienPlay()));
 
-function play2(championMove) {
-  const computerMove = Math.floor(Math.random() * 3);
-  const moves = [[0, -1, +1], [+1, 0, -1], [-1, +1, 0]];
-  const moveNames = ["rock", "paper", "scissor"];
-  console.log(`Alien did : ${moveNames[computerMove]}`);
+// Design
+timeFlag = false;
+function fadeElement() {
+  const elementShow = document.querySelector(".show");
+  const elementHide = document.querySelector(".hide");
+  if (elementShow) {
+    elementShow.className = "hide"
+    elementHide.className = "show"
+  } else {
+    elementHide.className = "show"
+  }
 }
 
-for (let i = 5; i > 0; i--) {
-  play2(1)
+function fadeTimer(count ,timeout) {
+  for (let i=count; i>0; i--) {
+    let myTime = setInterval(fadeElement(myTime), timeout)
+  }
 }
+
+fadeTimer(5, 2000)
