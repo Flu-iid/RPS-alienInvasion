@@ -46,22 +46,23 @@ function result(point) {
 result(movePoint(1, alienPlay()));
 
 // Design
-timeFlag = false;
-function fadeElement() {
-  const elementShow = document.querySelector(".show");
-  const elementHide = document.querySelector(".hide");
-  if (elementShow) {
-    elementShow.className = "hide"
-    elementHide.className = "show"
+function createElement() {
+  if (element.className === "show") {
+    element.className = "hide";
+  } else if (element.className === "hide") {
+    element.className = "show";
   } else {
-    elementHide.className = "show"
+    console.error("classSelectionError");
   }
 }
 
-function fadeTimer(count ,timeout) {
-  for (let i=count; i>0; i--) {
-    let myTime = setInterval(fadeElement(myTime), timeout)
+const paraList = [...document.querySelectorAll(`p.hide`)];
+let time = setInterval(() => {
+  const itemShow = paraList.shift();
+  const itemHide =
+  if (itemShow) {
+    toggleElement(itemShow);
+  } else {
+    clearInterval(time);
   }
-}
-
-fadeTimer(5, 2000)
+}, 1000);
