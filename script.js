@@ -44,39 +44,83 @@ function result(point) {
   }
 }
 
-// Design
-let counter = 0;
-function createElement(content) {
-  const parent = document.querySelector(`.preview`);
-  const child = document.createElement("p");
+//function Design
+
+function addElement(parentQueryPara, childElementPara, classPara, content) {
+  const parent = document.querySelector(parentQueryPara);
+  const child = document.createElement(childElementPara);
   parent.appendChild(child);
-  child.classList.add("message");
+  child.classList.add(classPara);
   child.textContent = content;
+}
+
+function addNode(parentNode, childNode, idPara, classPara) {
+  const parent = document.querySelector(parentNode);
+  const child = document.createElement(childNode);
+  parent.appendChild(child);
+  child.id = idPara;
+  child.classList.add(classPara);
+}
+
+// // Timer
+let counter = 0;
+function createTimerElement(content) {
+  addElement("#preview", "p", "message", content);
   counter++;
   return counter;
 }
 
 function timeNamer(i, content, time) {
   window[`time` + i] = setTimeout(() => {
-    createElement(content);
+    createTimerElement(content);
   }, time);
 }
-//function Run
-const contentList = [
-  "Hurry",
-  "7-leg-Aliens have invaded, and they left us with a challenge!",
-  "A game they call it ... which is apparently Rock-Paper-Scissors and they play it till point 7.",
-  "Our planet fates is in your hands champion!",
-  "Do what you must...",
-];
+//
 
-function messagePreview(list, timeInterval) {
+function initialMessagePreview(timeInterval) {
+  addNode("main", "section", "preview", "preview");
   let totalTime = 0;
-  list.forEach((item, index, array) => {
+  const contentList = [
+    "Hurry",
+    "7-leg-Aliens have invaded, and they left us with a challenge!",
+    "A game they call it ... which is apparently Rock-Paper-Scissors and they play it till point 7.",
+    "Our planet fates is in your hands champion!",
+    "Do what you must...",
+  ];
+  contentList.forEach((item, index, array) => {
     timeNamer(counter, item, totalTime);
     totalTime += timeInterval;
   });
 }
 
-messagePreview(contentList, 1000);
-result(movePoint(1, alienPlay()));
+function initialGame() {
+  addNode("main", "section", "game", "game");
+  ["rock", "paper", "scissor"].forEach((item) => {
+    addElement("section#game", "button", `${item}-selector`, item);
+    addElement(`button.${item}-selector`, "img", "`${item}-img", item);
+  });
+}
+
+function winPreview() {
+  addNode("main", "section", "winPreview", "winPreview");
+  addElement(
+    "#winPreview",
+    "p",
+    ".win",
+    "You have succeeded champion! We have won back our planet!!!"
+  );
+}
+
+function loosePreview() {
+  addNode("main", "section", "loosePreview", "loosePreview");
+  addElement(
+    "#loosePreview",
+    "p",
+    ".loose",
+    "we've lost champion. We must not loose hope and find another way"
+  );
+}
+
+// Function Run
+
+initialGame();
